@@ -1,0 +1,13 @@
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/controller/MainController.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/model/Items.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/controller/MainMenuController.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/controller/LoginController.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/repository/IDatabase.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/repository/ItemRepository.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/repository/RecordDB.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/model/Admin.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/model/User.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/util/OwnScanner.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/model/Customer.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/controller/VerifyDetailsController.java
+/home/sagar/NetBeansProjects/book/src/main/java/com/syntech/repository/UserRepository.java
