@@ -6,14 +6,18 @@
 package com.syntech.controller;
 
 import com.syntech.model.Customer;
+import com.syntech.repository.ExcelDatabase;
 import com.syntech.repository.UserRepository;
 import com.syntech.util.OwnScanner;
+import java.io.PrintWriter;
 
 /**
  *
  * @author sagar
  */
 public class LoginController {
+    ExcelDatabase excel=new ExcelDatabase();
+    LoggedInMenuController log=new LoggedInMenuController();
 
     public void signIn() {
         System.out.println("enter your userName");
@@ -23,8 +27,9 @@ public class LoginController {
         VerifyDetailsController vd = new VerifyDetailsController();
         
         if(vd.verifyUserCredential(userName, password)){
-            System.out.println("login sucesss !!!");
-            System.out.println(MainController.ur.getUsers());
+            System.out.println("login sucesss !!! \n");
+                log.LoggedInMenu(userName);
+            
         }
         else{
             System.out.println("Incorrect user");
@@ -32,7 +37,8 @@ public class LoginController {
 
     }
 
-    /* Entering the new user credential and storing them*/
+    /* Entering the new user credential and storing them in the database */
+    
     public void registerNewUser() {
        try{      
         System.out.println("Enter your id");
@@ -58,9 +64,9 @@ public class LoginController {
 
         Customer newCustomer = new Customer(id, address, name, password, phone, email, userName);
        
-        MainController.ur.saveToDB(newCustomer);
-        System.out.println(MainController.ur.getUsers());
-
+        MainController.userRepo.saveToDB(newCustomer);
+        System.out.println(MainController.userRepo.getUsers());
+        excel.saveToDB(newCustomer);
        }catch(Exception e){
            System.out.println("Enter the valid input ");
     }

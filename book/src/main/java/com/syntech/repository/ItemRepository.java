@@ -7,7 +7,9 @@ package com.syntech.repository;
 
 import com.syntech.model.Items;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,10 +17,22 @@ import java.util.List;
  */
 public class ItemRepository implements IDatabase<Items> {
 
-    public static List<Items> items = new ArrayList<Items>();
+   private Map<String,Items> items = new HashMap<String,Items>();
     @Override
     public void saveToDB(Items item) {
-        items.add(item);
+        items.put(item.getName(),item);
         System.out.println("listed items" + items);
-    } 
-}
+    }
+
+    public Map<String, Items> getItems() {
+        return items;
+    }
+
+    public void setItems(Map<String, Items> items) {
+        this.items = items;
+    }
+
+  
+    
+    }
+

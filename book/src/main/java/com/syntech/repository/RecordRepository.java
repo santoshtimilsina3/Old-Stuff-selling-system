@@ -5,21 +5,11 @@
  */
 package com.syntech.repository;
 
-import com.syntech.model.Customer;
-import java.io.File;
-import java.io.PrintWriter;
-
 /**
  *
  * @author sagar
  */
-public class LocalDatabase implements IDatabase<Customer> {
-   
-
-    @Override
-    public void saveToDB(Customer details) {
-        
-    }
+public class RecordRepository {
     
     
 }

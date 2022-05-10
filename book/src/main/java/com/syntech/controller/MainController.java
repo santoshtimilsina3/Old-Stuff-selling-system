@@ -1,5 +1,6 @@
 package com.syntech.controller;
 
+import com.syntech.repository.ItemRepository;
 import com.syntech.repository.UserRepository;
 import com.syntech.util.OwnScanner;
 
@@ -14,14 +15,16 @@ import com.syntech.util.OwnScanner;
  * @author sagar
  */
 public class MainController {
-    public static LoginController lc=new LoginController();
-    public static UserRepository ur=new UserRepository();
+    public static LoginController login=new LoginController();
+    public static UserRepository userRepo=new UserRepository();
+    public static ItemRepository item=new ItemRepository();
     public static void main(String... args) {
-        try{
+        
         while (true) {
+            try{
             System.out.println("---------------------------------------------");
             System.out.println("                                             ");
-            System.out.println("   Welcome to Old Stuff Sale Portal          ");
+            System.out.println("    Welcome to Old Stuff Sale Portal          ");
             System.out.println("                                             ");
             System.out.println("---------------------------------------------");
 
@@ -31,19 +34,21 @@ public class MainController {
             byte choice = OwnScanner.scan().nextByte();
             switch (choice) {
                 case 1:
-                    lc.signIn();
+                    login.signIn();
                     break;
                 case 2:
-                    lc.registerNewUser();
-                    break;
-                case 3:
+                    login.registerNewUser();
+                   break;
+                case 0:
                     System.exit(0);
                 default:
                     System.out.println("Enter valid number !!!");
             }
-        }
+        
         }catch(Exception e){
-            System.out.println("Enter valid input !!!! ");
+            System.out.println("Enter valid input !!!! "+e);
+            System.exit(0);
+        }
         }
     }
 }

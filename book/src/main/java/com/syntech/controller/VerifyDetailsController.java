@@ -15,6 +15,6 @@ public class VerifyDetailsController extends UserRepository {
 
     public boolean verifyUserCredential(String userName, String pass) {
 
-        return MainController.ur.getUsers() != null && MainController.ur.getUsers().containsKey(userName) && MainController.ur.getUsers().get(userName).getPassword().equals(pass);
+        return MainController.userRepo.getUsers() != null && MainController.userRepo.getUsers().containsKey(userName) && MainController.userRepo.getUsers().get(userName).getPassword().equals(pass);
     }
 }

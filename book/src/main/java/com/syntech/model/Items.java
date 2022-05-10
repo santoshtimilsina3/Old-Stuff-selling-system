@@ -14,13 +14,15 @@ public class Items {
     private String name;
     private float realPrice;
     private float sellingPrice;
+    private boolean type  ;
     
 
-    public Items(Long id, String name, float realPrice, float sellingPrice) {
+    public Items(Long id, String name, float realPrice, float sellingPrice,boolean type) {
         this.id = id;
         this.name = name;
         this.realPrice = realPrice;
         this.sellingPrice = sellingPrice;
+        this.type=type;
     }
 
     public Long getId() {
@@ -55,11 +57,20 @@ public class Items {
         this.sellingPrice = sellingPrice;
     }
 
-    @Override
-    public String toString() {
-        return "Items{" + "id=" + id + ", name=" + name + ", realPrice=" + realPrice + ", sellingPrice=" + sellingPrice + '}';
+    public boolean getType() {
+        return type;
     }
 
+    public void setType(boolean type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Items{" + "id=" + id + ", name=" + name + ", realPrice=" + realPrice + ", sellingPrice=" + sellingPrice + ", type=" + type + '}';
+    }
+
+    
    
 
     
