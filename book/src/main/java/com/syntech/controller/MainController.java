@@ -4,14 +4,7 @@ import com.syntech.repository.ItemRepository;
 import com.syntech.repository.UserRepository;
 import com.syntech.util.OwnScanner;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
  * @author sagar
  */
 public class MainController {
@@ -22,11 +15,11 @@ public class MainController {
         
         while (true) {
             try{
-            System.out.println("---------------------------------------------");
-            System.out.println("                                             ");
+            System.out.println("**********************************************");
+            System.out.println("                                              ");
             System.out.println("    Welcome to Old Stuff Sale Portal          ");
-            System.out.println("                                             ");
-            System.out.println("---------------------------------------------");
+            System.out.println("                                              ");
+            System.out.println("**********************************************");
 
             System.out.println("Press 1  :-  Login ");
             System.out.println("Press 2  :-  Register New User");
@@ -37,7 +30,7 @@ public class MainController {
                     login.signIn();
                     break;
                 case 2:
-                    login.registerNewUser();
+                    login.registerNewUser();                   
                    break;
                 case 0:
                     System.exit(0);
@@ -46,7 +39,7 @@ public class MainController {
             }
         
         }catch(Exception e){
-            System.out.println("Enter valid input !!!! "+e);
+            System.out.println("Enter valid input !!!! Main "+e);
             System.exit(0);
         }
         }

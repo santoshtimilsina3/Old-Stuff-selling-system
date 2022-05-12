@@ -6,17 +6,15 @@
 package com.syntech.controller;
 
 import com.syntech.model.Customer;
-import com.syntech.repository.ExcelDatabase;
-import com.syntech.repository.UserRepository;
+import com.syntech.repository.ExcelOperationRepository ;
 import com.syntech.util.OwnScanner;
-import java.io.PrintWriter;
 
 /**
  *
  * @author sagar
  */
 public class LoginController {
-    ExcelDatabase excel=new ExcelDatabase();
+    ExcelOperationRepository  excel=new ExcelOperationRepository ();
     LoggedInMenuController log=new LoggedInMenuController();
 
     public void signIn() {
@@ -24,24 +22,69 @@ public class LoginController {
        String userName = OwnScanner.scan().next();
         System.out.println("enter your password");
         String password = OwnScanner.scan().next();
-        VerifyDetailsController vd = new VerifyDetailsController();
+         VerifyDetailsController vd = new VerifyDetailsController();
         
-        if(vd.verifyUserCredential(userName, password)){
-            System.out.println("login sucesss !!! \n");
-                log.LoggedInMenu(userName);
-            
+        if(!vd.verifyUserCredential(userName, password)){
+           return;            
         }
-        else{
-            System.out.println("Incorrect user");
-        };
-
+        
+         System.out.println("login sucesss !!! \n");
+         log.LoggedInMenu(userName);
+       
     }
 
     /* Entering the new user credential and storing them in the database */
     
     public void registerNewUser() {
-       try{      
-        System.out.println("Enter your id");
+         System.out.println("press 1.  temporary user");
+        System.out.println("press 2.   permanent User");
+        System.out.println("press 3.   Main Menu");
+       byte choice =OwnScanner.scan().nextByte();
+        
+        switch(choice){
+            case 1: temporaryUser();
+            
+                    break;
+            case 2: permanentUser();
+                    break;
+            case 3: return;
+                     
+            default: System.out.println("Enter valid input !!! ");
+
+        
+     }
+    }
+    
+    public void temporaryUser(){
+        try {
+        Customer tempCustomer =takeMenuInput();
+        MainController.userRepo.saveToDB(tempCustomer);
+    
+    
+
+    
+            }catch(Exception e){
+    
+}     
+       
+    }
+
+    public void permanentUser(){ 
+        try{
+          Customer permanent= takeMenuInput();
+            
+      Object[] userData={permanent.getId(),permanent.getAddress(),permanent.getName(),permanent.getPassword(),permanent.getPhone(),permanent.getEmail(),permanent.getUserName()};
+        excel.appendExcelData(userData,"Customer");
+            
+        }catch(Exception e ){
+            System.out.println("Enter valid input !!!");          
+        
+        }
+
+
+            }
+    public Customer takeMenuInput() throws Exception {
+         System.out.println("Enter your id");
         Long id = OwnScanner.scan().nextLong();
 
         System.out.println("Enter your fullName");
@@ -63,14 +106,9 @@ public class LoginController {
         String password = OwnScanner.scan().next();
 
         Customer newCustomer = new Customer(id, address, name, password, phone, email, userName);
-       
-        MainController.userRepo.saveToDB(newCustomer);
-        System.out.println(MainController.userRepo.getUsers());
-        excel.saveToDB(newCustomer);
-       }catch(Exception e){
-           System.out.println("Enter the valid input ");
-    }
-
-
+         return newCustomer;
+      
     }
 }
+
+

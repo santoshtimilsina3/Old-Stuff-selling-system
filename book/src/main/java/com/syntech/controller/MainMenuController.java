@@ -5,6 +5,7 @@
  */
 package com.syntech.controller;
 import com.syntech.model.Items;
+import com.syntech.repository.ExcelOperationRepository;
 import com.syntech.util.OwnScanner;
 
 /**
@@ -12,19 +13,18 @@ import com.syntech.util.OwnScanner;
  * @author sagar
  */
 public class MainMenuController {
-    
+    ExcelOperationRepository itemRepo=new ExcelOperationRepository();
 
 /*view available items and buy the item that user want to buy and remove the bought item from available database */
     
     public void buyItems() {
         LoggedInMenuController.view.viewAvailableItems();
           String result =  LoggedInMenuController.view.buyItemMenu();
-          if(result!=null){
-              LoggedInMenuController.itemInsert.getItems().get(result).setType(false);             
-            
-        }
+          if(result==null){
+                    return;
+        }          
+         LoggedInMenuController.itemInsert.getItems().get(result).setType(false);    
 
-                
               
     }
     /* Take the input from the user about the description of items they want to sale and save them in database */
@@ -38,14 +38,16 @@ public class MainMenuController {
         String name = OwnScanner.scan().next();
 
         System.out.println("Enter Real price of your item");
-        float realPrice = OwnScanner.scan().nextFloat();
+        Long realPrice = OwnScanner.scan().nextLong();
 
         System.out.println("Enter your selling price ");
-        float sellingPrice = OwnScanner.scan().nextFloat();         
+        Long sellingPrice = OwnScanner.scan().nextLong();         
 
         Items item = new Items(id, name, realPrice, sellingPrice,true);
         
         LoggedInMenuController.itemInsert.saveToDB(item);
+        Object[] itemData={id,name,realPrice,sellingPrice,true};
+          itemRepo.appendExcelData(itemData, "items");
         
         }catch(Exception e){
             System.out.println("enter the valid input "+e);

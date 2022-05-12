@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class UserRepository implements IDatabase<Customer> {
     
-    private Map<String,User> users = new HashMap<String,User>();
+    private Map<String,User> users = new HashMap<>();
 
     @Override
     public void saveToDB(Customer customerDetail) {

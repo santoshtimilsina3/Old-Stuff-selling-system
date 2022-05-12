@@ -1,5 +1,4 @@
 com/syntech/model/Customer.class
-com/syntech/repository/ExcelDatabase.class
 com/syntech/model/Admin.class
 com/syntech/controller/LoggedInMenuController.class
 com/syntech/repository/RecordRepository.class
@@ -9,7 +8,9 @@ com/syntech/util/OwnScanner.class
 com/syntech/controller/VerifyDetailsController.class
 com/syntech/model/Items.class
 com/syntech/repository/IDatabase.class
+com/syntech/repository/ExcelOperationRepository.class
 com/syntech/controller/MainMenuController.class
+com/syntech/repository/outputStream.class
 com/syntech/controller/ViewOperation.class
 com/syntech/controller/LoginController.class
 com/syntech/model/User.class

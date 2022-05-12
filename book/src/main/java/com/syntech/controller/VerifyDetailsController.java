@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 package com.syntech.controller;
-
-import com.syntech.repository.*;
-
 /**
  *
  * @author sagar
  */
-public class VerifyDetailsController extends UserRepository {
+public class VerifyDetailsController  {
 
     public boolean verifyUserCredential(String userName, String pass) {
+             boolean nullAndKeyCheck,passwordMatch;
+             nullAndKeyCheck = MainController.userRepo.getUsers()!=null && MainController.userRepo.getUsers().containsKey(userName) ;
+             passwordMatch= MainController.userRepo.getUsers().get(userName).getPassword().equals(pass);
 
-        return MainController.userRepo.getUsers() != null && MainController.userRepo.getUsers().containsKey(userName) && MainController.userRepo.getUsers().get(userName).getPassword().equals(pass);
+        return nullAndKeyCheck && passwordMatch;
     }
 }
