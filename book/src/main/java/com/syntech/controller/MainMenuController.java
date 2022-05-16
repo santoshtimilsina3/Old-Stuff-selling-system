@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.syntech.controller;
+import com.syntech.model.Customer;
 import com.syntech.model.Items;
 import com.syntech.repository.ExcelOperationRepository;
 import com.syntech.util.OwnScanner;
@@ -29,7 +30,7 @@ public class MainMenuController {
     }
     /* Take the input from the user about the description of items they want to sale and save them in database */
 
-    public void sellItems() {
+    public void sellItems(Customer userData) {
         try{
         System.out.println("Enter your Item id");
         Long id = OwnScanner.scan().nextLong();
@@ -48,6 +49,9 @@ public class MainMenuController {
         LoggedInMenuController.itemInsert.saveToDB(item);
         Object[] itemData={id,name,realPrice,sellingPrice,true};
           itemRepo.appendExcelData(itemData, "items");
+          Object[] allRecordEntity={userData.getId(),userData.getName(),userData.getPhone(),id,name,realPrice,sellingPrice,0,true};
+            
+          itemRepo.appendExcelData(allRecordEntity,"allRecords");
         
         }catch(Exception e){
             System.out.println("enter the valid input "+e);

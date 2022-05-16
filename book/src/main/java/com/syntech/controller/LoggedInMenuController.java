@@ -5,6 +5,7 @@
  */
 package com.syntech.controller;
 
+import com.syntech.model.Customer;
 import com.syntech.repository.ItemRepository;
 import com.syntech.util.OwnScanner;
 
@@ -18,9 +19,9 @@ public class LoggedInMenuController {
    public static ItemRepository itemInsert=new ItemRepository();
    public static LoggedInMenuController recordDatabase=new LoggedInMenuController();
     
-     public void LoggedInMenu(String name){
+     public void LoggedInMenu(Customer userData){
      System.out.println("---------------------------------------------\n");
-     System.out.println("Welcome Mr/mrs :- "+ MainController.userRepo.getUsers().get(name).getName()+" \n");
+     System.out.println("Welcome Mr/mrs :- "+ userData.getName()+" \n");
      System.out.println("--------------------------------------------- \n");
     while(true){
         try{   
@@ -32,7 +33,7 @@ public class LoggedInMenuController {
     switch(choice){
         case 1: menu.buyItems();
                  break;
-        case 2: menu.sellItems();
+        case 2: menu.sellItems(userData);
                  break;
         case 3: view.viewAvailableItems();
                 break;
