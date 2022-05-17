@@ -5,7 +5,7 @@ import com.syntech.repository.UserRepository;
 import com.syntech.util.OwnScanner;
 
 /**
- * @author sagar
+ * @author Santosh
  */
 public class MainController {
     public static LoginController login=new LoginController();

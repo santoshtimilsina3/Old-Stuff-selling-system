@@ -52,7 +52,7 @@ public class LoginController {
         
         switch(choice){
             case 1: temporaryUser();
-            
+                    
                     break;
             case 2: permanentUser();
                     break;
@@ -67,12 +67,9 @@ public class LoginController {
     public void temporaryUser(){
         try {
         Customer tempCustomer =takeInput();
-        MainController.userRepo.saveToDB(tempCustomer);
-    
-    
-
-    
+        MainController.userRepo.saveToDB(tempCustomer); 
             }catch(Exception e){
+                System.out.println("enter valid input ~~~ temporary user");
     
 }     
        
@@ -87,7 +84,7 @@ public class LoginController {
         signIn();
             
         }catch(Exception e ){
-            System.out.println("Enter valid input !!!");          
+            System.out.println("Enter valid input !!! permanent user");          
         
         }
 

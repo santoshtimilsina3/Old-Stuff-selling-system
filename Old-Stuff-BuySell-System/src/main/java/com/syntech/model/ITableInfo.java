@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.syntech.repository;
+package com.syntech.model;
 
 /**
  *
  * @author sagar
  */
-class outputStream {
+public interface ITableInfo {
     
 }
