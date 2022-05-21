@@ -14,6 +14,7 @@ import com.syntech.util.OwnScanner;
  * @author sagar
  */
 public class LoggedInMenuController {
+    
    public static  MainMenuController menu= new MainMenuController();
    public static  ViewOperation view=new ViewOperation();
    public static ItemRepository itemInsert=new ItemRepository();
@@ -31,11 +32,11 @@ public class LoggedInMenuController {
     System.out.println("Press 0 . LogOut                    ");
     byte choice =OwnScanner.scan().nextByte();
     switch(choice){
-        case 1: menu.buyItems();
+        case 1: menu.buyItems(userData);
                  break;
         case 2: menu.sellItems(userData);
                  break;
-        case 3: view.viewAvailableItems();
+    case 3: view.viewAvailableItmes();
                 break;
         case 0: return;
         default:System.out.println("please enter the valid input");
@@ -44,7 +45,7 @@ public class LoggedInMenuController {
     }
     catch(Exception e){
         System.out.println("please enter the valid input");
-            
+            System.out.println("loginmenucontroller");
             }
 }
      }

@@ -7,8 +7,9 @@ package com.syntech.model;
 
 /**
  *
- * @author sagar
+ * @author Santosh
+ * @param <T>
  */
-public interface ITableInfo {
-    
+public interface ITableInfo{
+        Tables getTypeOfSheet();
 }

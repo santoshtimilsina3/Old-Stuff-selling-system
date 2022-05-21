@@ -9,7 +9,7 @@ package com.syntech.model;
  *
  * @author sagar
  */
-public class Customer extends User {
+public class Customer extends User implements ITableInfo{
 
     private Long id;
     private String address;
@@ -40,5 +40,14 @@ public class Customer extends User {
     public String toString() {
         return "Customer{" + "id=" + id + ", address=" + address + '}' + super.toString();
     }
+
+    @Override
+    public Tables getTypeOfSheet() {
+        return Tables.CUSTOMER;
+    }
+
+
+
+  
 
 }
