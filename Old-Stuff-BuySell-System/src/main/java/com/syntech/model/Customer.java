@@ -46,8 +46,5 @@ public class Customer extends User implements ITableInfo{
         return Tables.CUSTOMER;
     }
 
-
-
   
-
 }

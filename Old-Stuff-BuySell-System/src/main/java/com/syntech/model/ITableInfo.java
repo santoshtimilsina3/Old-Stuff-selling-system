@@ -12,4 +12,5 @@ package com.syntech.model;
  */
 public interface ITableInfo{
         Tables getTypeOfSheet();
+        
 }

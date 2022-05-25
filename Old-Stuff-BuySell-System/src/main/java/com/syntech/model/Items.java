@@ -12,18 +12,21 @@ import java.util.Objects;
  * @author sagar
  */
 public class Items implements ITableInfo {
+
     private Long id;
     private String name;
     private Float realPrice;
     private Float sellingPrice;
-    private boolean type;
-       
-    public Items(Long id, String name, Float realPrice, Float sellingPrice,boolean type) {
+    private Boolean type;
+    private Long customerId;
+
+    public Items(Long id, String name, Float realPrice, Float sellingPrice, Boolean type, Long customerId) {
         this.id = id;
         this.name = name;
         this.realPrice = realPrice;
         this.sellingPrice = sellingPrice;
-        this.type=type;
+        this.type = type;
+        this.customerId = customerId;
     }
 
     public Long getId() {
@@ -42,7 +45,7 @@ public class Items implements ITableInfo {
         this.name = name;
     }
 
-    public float getRealPrice() {
+    public Float getRealPrice() {
         return realPrice;
     }
 
@@ -50,7 +53,7 @@ public class Items implements ITableInfo {
         this.realPrice = realPrice;
     }
 
-    public float getSellingPrice() {
+    public Float getSellingPrice() {
         return sellingPrice;
     }
 
@@ -62,22 +65,29 @@ public class Items implements ITableInfo {
         return type;
     }
 
-    public void setType(boolean type) {
+    public void setType(Boolean type) {
         this.type = type;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     @Override
     public String toString() {
-        return "Items{" + "id=" + id + ", name=" + name + ", realPrice=" + realPrice + ", sellingPrice=" + sellingPrice + ", type=" + type + '}';
+        return "Items{" + "id=" + id + ", name=" + name + ", realPrice=" + realPrice +
+                ", sellingPrice=" + sellingPrice + ", type=" + type + ", customerId=" + customerId + '}';
     }
-
-    
 
     @Override
     public Tables getTypeOfSheet() {
         return Tables.ITEMS;
-                        
-   }
+
+    }
 
     @Override
     public int hashCode() {
@@ -120,5 +130,4 @@ public class Items implements ITableInfo {
         return true;
     }
 
-  
 }

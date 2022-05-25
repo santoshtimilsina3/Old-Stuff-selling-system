@@ -40,7 +40,7 @@ public class ExcelOperationRepository {
                 getWorkBook(excelFilePath);
             }
             FileInputStream file = new FileInputStream(excelFile);
-            System.out.println("first");
+
             Workbook workbook = WorkbookFactory.create(file);
             writeToWorkBook(list, workbook);
             try (
@@ -57,7 +57,7 @@ public class ExcelOperationRepository {
 
     public Workbook getWorkBook(String excelFilePath) throws FileNotFoundException, IOException, InvalidFormatException {
         Workbook workbook;
-        System.out.println("second");
+
         try (OutputStream fileOut = new FileOutputStream(excelFilePath)) {
             workbook = new HSSFWorkbook();
             workbook.createSheet(Tables.ALLRECORDS.getSheetName());
@@ -73,7 +73,6 @@ public class ExcelOperationRepository {
     }
 
     public void writeToWorkBook(List<ITableInfo> list, Workbook workbook) {
-        System.out.println("third");
 
         for (ITableInfo table : list) {
             Sheet sheet = getSheet(table, workbook);
@@ -82,12 +81,12 @@ public class ExcelOperationRepository {
     }
 
     public Row getrow(ITableInfo table, Sheet sheet) {
-        System.out.println("five");
+
         Row row = null;
         switch ((Tables) table.getTypeOfSheet()) {
             case ITEMS:
                 Items item = (Items) table;
-                System.out.println("getrow five");
+
                 int itemEmptyRow = getEmptyRowIndex(sheet);
                 row = sheet.createRow(itemEmptyRow);
                 row.createCell(0).setCellValue(item.getId().toString());
@@ -99,7 +98,7 @@ public class ExcelOperationRepository {
 
             case CUSTOMER:
                 Customer customer = (Customer) table;
-                System.out.println("customer five");
+
                 int customerEmptyRow = getEmptyRowIndex(sheet);
                 row = sheet.createRow(customerEmptyRow);
                 //Long id, String address, String name, String password, Long phone, String email, String userName
@@ -134,7 +133,7 @@ public class ExcelOperationRepository {
 
     private int getEmptyRowIndex(Sheet sheet) {
         int index = 1;
-        System.out.println("emptymethod");
+
         for (Row row : sheet) {
             row = sheet.getRow(index);
             if (row == null || row.getCell(0) == null || row.getCell(0).getStringCellValue().equals("")) {
@@ -158,7 +157,7 @@ public class ExcelOperationRepository {
             for (Row row : sheet) {
                 row = sheet.getRow(index);
                 if (row.getCell(3).getStringCellValue().equals(password) && row.getCell(6).getStringCellValue().equals(userName)) {
-                    System.out.println("sucess!!!");
+
                     userData = getCustomerObject(index, sheet);
                     break;
                 }
@@ -218,7 +217,7 @@ public class ExcelOperationRepository {
             Boolean type = true;
             boolean status = false;
             int index = 1;
-            System.out.println("hello i am in excel buy iteration");
+
             for (Row row : sheet) {
                 row = sheet.getRow(index);
                 if (row != null && row.getCell(1).getStringCellValue().equals(name) && row.getCell(4).getStringCellValue().equals("true")) {
@@ -232,7 +231,6 @@ public class ExcelOperationRepository {
                     type = false;
                     status = true;
                     System.out.println(itemId + itemName + realPrice + buyPrice + sheet.getSheetName() + index);
-                    System.out.println("lastof buy iteration!!!");
                     updateItem(index);
                     break;
                 }
@@ -265,9 +263,9 @@ public class ExcelOperationRepository {
         try {
             File excelFile = new File(excelFilePath);
             FileInputStream file = new FileInputStream(excelFile);
-            System.out.println("first");
+
             Workbook workbook = WorkbookFactory.create(file);
-            Sheet sheet=workbook.getSheet("Items");
+            Sheet sheet = workbook.getSheet("Items");
             sheet.getRow(rowIndex).getCell(0).setCellValue("");
             sheet.getRow(rowIndex).getCell(1).setCellValue("");
             sheet.getRow(rowIndex).getCell(2).setCellValue("");
@@ -292,7 +290,6 @@ public class ExcelOperationRepository {
         try {
             FileInputStream file = new FileInputStream(new File(excelFilePath));
             workbook = WorkbookFactory.create(file);
-            System.out.println("updateitemtable before loop");
             sheet.getRow(rowIndex).getCell(0).setCellValue("");
             sheet.getRow(rowIndex).getCell(1).setCellValue("");
             sheet.getRow(rowIndex).getCell(2).setCellValue("");
@@ -306,86 +303,7 @@ public class ExcelOperationRepository {
                 outputStream.close();
             }
         } catch (IOException e) {
-            System.out.println("Error inside ExcelRepo-writeFile");
+            System.out.println("Sorry item could not be updated ");
         }
     }
 }
-
-//    public Object[] getRowData(Row row, FormulaEvaluator formulaEvaluator) {
-//        Object[] rowData = new Object[row.getRowNum()];
-//
-//        Integer size = 0;
-//        for (Cell cell : row) {
-//            Object data = null;
-//            switch (formulaEvaluator.evaluateInCell(cell).getCellTypeEnum()) {
-//                case NUMERIC:
-//                    data = cell.getNumericCellValue();
-//                    break;
-//                case STRING:
-//                    data = cell.getStringCellValue();
-//                    break;
-//                case _NONE:
-//                    break;
-//                case FORMULA:
-//                    break;
-//                case BLANK:
-//                    break;
-//                case BOOLEAN:
-//                    data = cell.getBooleanCellValue();
-//                    break;
-//                case ERROR:
-//                    break;
-//                default:
-//                    break;
-//            }
-//            rowData[++size] = data;
-//        }
-//        return rowData;
-//    }
-//    public <ITableInfo>List loginExcelIteration(String userName, String password, String sheetName) {
-//        String excelFilePath = "/home/sagar/NetBeansProjects/Old-Stuff-BuySell-System/oldsell.xls";
-//        Workbook workbook;
-//        try (FileInputStream inputStream = new FileInputStream(new File(excelFilePath))) {
-//            workbook = WorkbookFactory.create(inputStream);
-//            Sheet sheet = workbook.getSheet(sheetName);
-//            System.out.println("inside loginexceliteration");
-//
-//            FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
-//            for (Row row : sheet) {
-//                for (Cell cell : row) {
-//                    //  cell = (HSSFCell)cell;
-//
-//                    switch (formulaEvaluator.evaluateInCell(cell).getCellTypeEnum()) {
-//                        case NUMERIC:
-//                            //System.out.print(cell.getNumericCellValue() + "\t");
-//                            break;
-//                        case STRING:
-//                            if (cell.getStringCellValue().equalsIgnoreCase(password)) {
-//                                if (cell.getStringCellValue().equalsIgnoreCase(userName)) {
-//                                    System.out.println("suceessss");
-//                                    getRowData(row, formulaEvaluator);
-//                                }
-//                            }
-//                            break;
-//                        case _NONE:
-//                            break;
-//                        case FORMULA:
-//                            break;
-//                        case BLANK:
-//                            break;
-//                        case BOOLEAN:
-//                            break;
-//                        case ERROR:
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//
-//                }
-//
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        return null;
-//    }
