@@ -9,6 +9,7 @@ import com.syntech.model.BoughtItems;
 import com.syntech.model.Customer;
 import com.syntech.model.ITableInfo;
 import com.syntech.model.Items;
+import com.syntech.util.Bycrypt;
 import com.syntech.util.JDBCCon;
 import com.syntech.util.OwnScanner;
 import java.sql.Connection;
@@ -26,12 +27,10 @@ public class JDBC {
 
     public void writeToDatabase(List<ITableInfo> list) {
         try {
-            System.out.println(list);
             Connection connection = JDBCCon.getConnection();
             for (ITableInfo table : list) {
-                 System.out.println(table);
                 insertIntoTable(table, connection);
-               
+
             }
         } catch (SQLException e) {
             System.out.println("Database ERROR !!!");
@@ -67,7 +66,7 @@ public class JDBC {
                 IStatement.setBoolean(4, item.getType());
                 IStatement.setLong(5, item.getCustomerId());
                 IStatement.executeUpdate();
-                
+
                 break;
 
             case "bought_item":
@@ -100,8 +99,8 @@ public class JDBC {
     }
 
     private void printResultSet(ResultSet result) throws SQLException {
-        ResultSetMetaData myRs = result.getMetaData();
-        int columnCount = myRs.getColumnCount();
+        ResultSetMetaData metaData = result.getMetaData();
+        int columnCount = metaData.getColumnCount();
         while (result.next()) {
             for (int startIndex = 1; startIndex <= columnCount; startIndex++) {
                 System.out.print(result.getObject(startIndex));
@@ -143,57 +142,39 @@ public class JDBC {
         }
 
     }
-    public void deleteUnsoldItem(Long itemId,Long customerId){
-        try{
-        Connection connection = JDBCCon.getConnection();
+
+    public void deleteUnsoldItem(Long itemId, Long customerId) {
+        try {
+            Connection connection = JDBCCon.getConnection();
             String query = "delete from available_item where id=? and is_available=true and customer_id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, itemId);
             statement.setLong(2, customerId);
-            int rowEffected=statement.executeUpdate();
-            if(rowEffected<=0){
+            int rowEffected = statement.executeUpdate();
+            if (rowEffected <= 0) {
                 System.out.println("Enter valid item ");
             }
-        }catch(SQLException e){
-            
-        }finally{
+        } catch (SQLException e) {
+
+        } finally {
             JDBCCon.closeConnection();
         }
-        
+
     }
-//    public void insertData(Customer customer) {
-//        try {
-//            Connection con = JDBCCon.getConnection();
-//            //String address, String name, String password, Long phone, String email, String userName
-//            String query = "insert into customer(address,name,password,phone,email,user_name) values(?,?,?,?,?,?)";
-//            PreparedStatement statement = con.prepareStatement(query);
-//            statement.setString(1, customer.getAddress());
-//            statement.setString(2, customer.getName());
-//            statement.setString(3, customer.getPassword());
-//            statement.setLong(4, customer.getPhone());
-//            statement.setString(5, customer.getEmail());
-//            statement.setString(6, customer.getUserName());
-//            statement.execute();
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        } finally {
-//            JDBCCon.closeConnection();
-//        }
-//    }
 
     public Customer checkCustomerCredential(String inUserName, String inPassword) {
         try {
             Connection con = JDBCCon.getConnection();
-            String query = "select * from customer where password=? and user_name=?";
+            String query = "select * from customer where user_name=?";
             PreparedStatement statement = con.prepareStatement(query);
-            statement.setString(1, inPassword);
-            statement.setString(2, inUserName);
+            statement.setString(1, inUserName);
             ResultSet result = statement.executeQuery();
-            System.out.println("after result set");
             while (result.next()) {
-                String pass = result.getString("password");
+                String bycryptedPassword = result.getString("password");
                 String name = result.getString("user_name");
-                if (pass.equals(inPassword) && name.equals(inUserName)) {
+                boolean userNameMatch=name.equals(inUserName);
+                boolean passwordMatch=Bycrypt.isHashingMatched(inPassword,bycryptedPassword);                
+                if (userNameMatch && passwordMatch){                    
                     Long id = result.getLong(1);
                     String address = result.getString(2);
                     String CName = result.getString(3);
@@ -215,12 +196,14 @@ public class JDBC {
         return null;
     }
 
-    public void getAvailableItem() {
+    public void getAvailableItem(Long customerId) {
         try {
             Connection connection = JDBCCon.getConnection();
-            String sql = "select id,item_name,selling_price from available_item where is_available=true";
+            //select id,item_name,selling_price from available_item where is_available=true and customer_id not in(2)
+            String sql = "select id,item_name,selling_price from available_item where customer_id !=? and is_available is true";
             PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery(sql);
+            statement.setLong(1, customerId);
+            ResultSet resultSet = statement.executeQuery();
             System.out.println("item Id  " + " " + "item Name " + " " + "buying Price");
             printResultSet(resultSet);
         } catch (SQLException e) {
@@ -276,13 +259,11 @@ public class JDBC {
         }
 
     }
-      private boolean isUserOk() {
+
+    private boolean isUserOk() {
         System.out.println("Are you sure you want to buy? yes/No");
         String choice = OwnScanner.scan().next();
-        System.out.println(choice);
         return (choice.equals("yes") || choice.equals("y"));
     }
-
-  
 
 }
